@@ -1,19 +1,22 @@
 import { useReducer } from "react";
 
 //init  state
-let initState = 0;
-
+const initState = "";
 // Actions
-const UP_ACTION = "up_action";
-const DOWN_ACTION = "down_action";
-
+const SETTASK = "set_task";
+const settask = (payload) => {
+	return {
+		type: "set_task",
+		payload,
+	};
+};
 //Reducer
 const reducer = (state, action) => {
-	switch (action) {
-		case UP_ACTION:
-			return state + 1;
-		case DOWN_ACTION:
-			return state - 1;
+	console.log("action", action);
+	switch (action.type) {
+		case SETTASK:
+			state = action.payload;
+			break;
 		default:
 			throw new Error("invalid action");
 	}
@@ -22,20 +25,20 @@ const reducer = (state, action) => {
 //dispatch
 
 function Container() {
-	const [count, dispatch] = useReducer(reducer, initState);
+	const [task, dispatch] = useReducer(initState, reducer);
 	return (
 		<div style={{ margin: "20px" }}>
-			<h1
-				style={{
-					padding: "20px",
-					paddingBottom: "0",
-					fontSize: "60px",
-				}}
-			>
-				{count}
-			</h1>
-			<button onClick={() => dispatch(DOWN_ACTION)}>down</button>
-			<button onClick={() => dispatch(UP_ACTION)}>up</button>
+			<h1>ToDo</h1>
+			<input
+				type="text"
+				value={task}
+				placeholder="please todo"
+				onChange={(e) => dispatch(settask(e.target.value))}
+			/>
+			<button>add</button>
+			<ul>
+				<li>thanh cong</li>
+			</ul>
 		</div>
 	);
 }
