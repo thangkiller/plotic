@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 
 //init  state
-const initState = "";
+const initState = "d";
 // Actions
 const SETTASK = "set_task";
 const settask = (payload) => {
@@ -25,15 +25,15 @@ const reducer = (state, action) => {
 //dispatch
 
 function Container() {
-	const [task, dispatch] = useReducer(initState, reducer);
+	// const [task, dispatch] = useReducer(initState, reducer);
 	return (
 		<div style={{ margin: "20px" }}>
 			<h1>ToDo</h1>
 			<input
 				type="text"
-				value={task}
+				value={`thành công`}
 				placeholder="please todo"
-				onChange={(e) => dispatch(settask(e.target.value))}
+				onChange={(e) => console.log(settask(e.target.value))}
 			/>
 			<button>add</button>
 			<ul>
