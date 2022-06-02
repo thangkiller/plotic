@@ -1,8 +1,11 @@
 import "./App.css";
-import 
+import Container from "./draft/timer/Container";
 
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <Container />
+    </div>
+  );
 }
-
 export default App;

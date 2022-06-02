@@ -1,22 +1,39 @@
 import { useReducer } from "react";
 
 //init  state
-const initState = "d";
+const initState = {
+	job: "",
+	jobs: [],
+};
 // Actions
 const SETTASK = "set_task";
+const ADDTASK = "add_task";
 const settask = (payload) => {
 	return {
 		type: "set_task",
 		payload,
 	};
 };
+const addtask = () => {
+	return {
+		type: "add_task",
+	};
+};
 //Reducer
 const reducer = (state, action) => {
-	console.log("action", action);
 	switch (action.type) {
 		case SETTASK:
-			state = action.payload;
+			return {
+				...state,
+				job: action.payload,
+			};
 			break;
+		case ADDTASK:
+			if (state.job === "") return state;
+			return {
+				jobs: [...state.jobs, state.job],
+				job: "",
+			};
 		default:
 			throw new Error("invalid action");
 	}
@@ -25,19 +42,22 @@ const reducer = (state, action) => {
 //dispatch
 
 function Container() {
-	// const [task, dispatch] = useReducer(initState, reducer);
+	const [state, dispatch] = useReducer(reducer, initState);
+	const { job, jobs } = state;
 	return (
 		<div style={{ margin: "20px" }}>
 			<h1>ToDo</h1>
 			<input
 				type="text"
-				value={`thành công`}
+				value={job}
 				placeholder="please todo"
-				onChange={(e) => console.log(settask(e.target.value))}
+				onChange={(e) => dispatch(settask(e.target.value))}
 			/>
-			<button>add</button>
+			<button onClick={() => dispatch(addtask())}>add</button>
 			<ul>
-				<li>thanh cong</li>
+				{jobs.map((job) => (
+					<li key={job}>{job}</li>
+				))}
 			</ul>
 		</div>
 	);
